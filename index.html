@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#9aceca" />
+    <meta
+      name="description"
+      content="A little explorer. Twelve floating islands. A sky full of friends. Discover the world of Cloudkeepers."
+    />
+    <title>Cloudkeepers · A sky full of friends</title>
+    <link rel="icon" href="assets/cloud.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <svg
+      class="symbol-library"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <symbol id="i-cloud" viewBox="0 0 24 24">
+          <path
+            d="M6.5 18h12a4 4 0 0 0 0-8 6.5 6.5 0 0 0-12.7-1A4.5 4.5 0 0 0 6.5 18Z"
+          />
+          <path
+            d="m12 5 1 2 2 .3-1.5 1.5.4 2.2L12 10l-1.9 1 .4-2.2L9 7.3l2-.3Z"
+          />
+        </symbol>
+        <symbol id="i-map" viewBox="0 0 24 24">
+          <path d="m3 5 6-2 6 3 6-2v15l-6 2-6-3-6 2Z" />
+          <path d="M9 3v15m6-12v15" />
+        </symbol>
+        <symbol id="i-paw" viewBox="0 0 24 24">
+          <path d="M8 13c-2 2-4 4-3 6s4 0 7 0 6 2 7 0-1-4-3-6-6-2-8 0Z" />
+          <ellipse cx="4.5" cy="10" rx="2" ry="2.7" />
+          <ellipse cx="9.5" cy="5.5" rx="2" ry="2.7" />
+          <ellipse cx="15.5" cy="5.5" rx="2" ry="2.7" />
+          <ellipse cx="20" cy="10" rx="2" ry="2.7" />
+        </symbol>
+        <symbol id="i-star" viewBox="0 0 24 24">
+          <path
+            d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1 6.2-5.5-2.9-5.5 2.9 1-6.2L3 9.6l6.2-.9Z"
+          />
+        </symbol>
+        <symbol id="i-compass" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="m16 8-2.5 5.5L8 16l2.5-5.5Z" />
+        </symbol>
+        <symbol id="i-sound" viewBox="0 0 24 24">
+          <path d="M11 4 5 9H2v6h3l6 5Z" />
+          <path d="M15 8a6 6 0 0 1 0 8m3-11a10 10 0 0 1 0 14" />
+        </symbol>
+        <symbol id="i-muted" viewBox="0 0 24 24">
+          <path d="M11 4 5 9H2v6h3l6 5Zm5 5 6 6m0-6-6 6" />
+        </symbol>
+        <symbol id="i-sun" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4" />
+          <path
+            d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+          />
+        </symbol>
+        <symbol id="i-moon" viewBox="0 0 24 24">
+          <path d="M20 15A9 9 0 0 1 9 4a9 9 0 1 0 11 11Z" />
+        </symbol>
+        <symbol id="i-expand" viewBox="0 0 24 24">
+          <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />
+        </symbol>
+        <symbol id="i-arrow" viewBox="0 0 24 24">
+          <path d="M4 12h16m-6-6 6 6-6 6" />
+        </symbol>
+        <symbol id="i-close" viewBox="0 0 24 24">
+          <path d="m6 6 12 12M6 18 18 6" />
+        </symbol>
+        <symbol id="i-leaf" viewBox="0 0 24 24">
+          <path d="M20 3C9 2 3 7 5 15c2 5 13 6 15-12Z" />
+          <path d="M4 21 15 10" />
+        </symbol>
+        <symbol id="i-book" viewBox="0 0 24 24">
+          <path
+            d="M12 5C8 2 3 3 3 3v16s5-1 9 2c4-3 9-2 9-2V3s-5-1-9 2Zm0 0v16"
+          />
+        </symbol>
+        <symbol id="i-heart" viewBox="0 0 24 24">
+          <path d="M12 21 3 12C-2 5 7 0 12 6c5-6 14-1 9 6Z" />
+        </symbol>
+        <symbol id="i-check" viewBox="0 0 24 24">
+          <path d="m5 12 4 4L19 6" />
+        </symbol>
+        <symbol id="i-help" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M9 9a3 3 0 1 1 5 2c-2 1-2 2-2 3m0 3h.01" />
+        </symbol>
+      </defs>
+    </svg>
+    <main
+      id="game"
+      class="game"
+      aria-label="Cloudkeepers floating island world"
+    >
+      <div class="world" id="world">
+        <div class="artboard" id="artboard">
+          <img
+            class="scenery"
+            src="assets/clover-cove.webp"
+            alt="A grassy floating island with round trees, a woodland cottage, a waterfall, and a little dock above golden clouds"
+            fetchpriority="high"
+            draggable="false"
+          />
+          <div class="night-wash" aria-hidden="true"></div>
+          <div class="fireflies" id="fireflies" aria-hidden="true"></div>
+          <div
+            class="walk-area"
+            id="walk-area"
+            aria-label="Tap the grassy clearing to move your explorer"
+          ></div>
+          <div id="destination" class="destination" aria-hidden="true"></div>
+          <button
+            class="scene-object explorer"
+            id="explorer"
+            aria-label="Meet your Cloudkeeper"
+            style="--x: 52; --y: 57"
+          >
+            <span class="ground-shadow"></span
+            ><img
+              src="assets/explorer.webp"
+              alt="A little explorer in a leafy cap, green overalls and golden scarf"
+              draggable="false"
+            /><span class="player-label" id="player-label">Daniela</span>
+          </button>
+          <button
+            class="scene-object fox"
+            id="fox"
+            data-dialog="pip"
+            aria-label="Say hello to Pip the fox"
+            style="--x: 63; --y: 55"
+          >
+            <span class="ground-shadow"></span
+            ><img
+              src="assets/pip.webp"
+              alt="Pip, a little red fox with a green scarf"
+              draggable="false"
+            /><span class="object-label"
+              ><span class="hello-dot"></span> Pip</span
+            >
+          </button>
+          <button
+            class="landmark cottage"
+            data-dialog="cottage"
+            aria-label="Explore the Cloudkeeper cottage"
+            style="--x: 71; --y: 33"
+          >
+            <span class="landmark-dot">⌂</span
+            ><span class="landmark-label">Little home</span>
+          </button>
+          <button
+            class="landmark signpost"
+            data-dialog="sign"
+            aria-label="Read the island signpost"
+            style="--x: 24; --y: 47"
+          >
+            <span class="landmark-dot"
+              ><svg class="icon"><use href="#i-compass" /></svg></span
+            ><span class="landmark-label">This way!</span>
+          </button>
+          <button
+            class="scene-object ferry"
+            id="ferry"
+            data-dialog="ferry"
+            aria-label="Discover the sky ferry"
+            style="--x: 86; --y: 29"
+          >
+            <svg
+              class="airship"
+              viewBox="0 0 260 165"
+              role="img"
+              aria-label="A turquoise and golden miniature zeppelin"
+            >
+              <defs>
+                <linearGradient id="envelope" x1="0" y1="0" x2="0" y2="1">
+                  <stop stop-color="#d6edcf" />
+                  <stop offset=".55" stop-color="#8aaf93" />
+                  <stop offset="1" stop-color="#416e62" />
+                </linearGradient>
+                <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+                  <stop stop-color="#f9d292" />
+                  <stop offset="1" stop-color="#cf9658" />
+                </linearGradient>
+              </defs>
+              <path d="m218 45 28-21-2 29 14 21-39-1" fill="#648774" />
+              <ellipse
+                cx="125"
+                cy="64"
+                rx="105"
+                ry="45"
+                fill="url(#envelope)"
+              />
+              <path
+                d="M125 20c-50 13-51 77 0 89m0-89c50 13 51 77 0 89"
+                fill="none"
+                stroke="#e6cf9d"
+                stroke-width="8"
+                opacity=".8"
+              />
+              <path
+                d="M21 66h207"
+                stroke="#406b59"
+                stroke-width="2"
+                fill="none"
+                opacity=".3"
+              />
+              <path
+                d="m81 101 13 30m79-30-9 30"
+                fill="none"
+                stroke="#6b6950"
+                stroke-width="3"
+              />
+              <path d="M86 126h90l-10 22H99Z" fill="url(#gold)" />
+              <rect
+                x="99"
+                y="118"
+                width="64"
+                height="15"
+                rx="7"
+                fill="#f3dca9"
+              />
+              <rect
+                x="109"
+                y="120"
+                width="12"
+                height="10"
+                rx="3"
+                fill="#558778"
+              />
+              <rect
+                x="129"
+                y="120"
+                width="12"
+                height="10"
+                rx="3"
+                fill="#558778"
+              />
+              <path d="M174 135h15" stroke="#856841" stroke-width="4" />
+              <ellipse
+                class="propeller"
+                cx="189"
+                cy="135"
+                rx="3"
+                ry="15"
+                fill="#ae8859"
+              />
+              <path
+                d="m54 43 7-9m-5 18 12-14"
+                stroke="#edf0d1"
+                stroke-width="4"
+                stroke-linecap="round"
+                opacity=".6"
+              />
+              <path
+                d="m125 46 5 10 11 2-8 8 2 11-10-5-10 5 2-11-8-8 11-2Z"
+                fill="#ffe0a1"
+              />
+            </svg>
+            <span class="ferry-label"
+              >A ride to the clouds
+              <svg class="icon"><use href="#i-arrow" /></svg
+            ></span>
+          </button>
+          <div class="floating-leaves" aria-hidden="true">
+            <span>✦</span><span>✧</span><span>✦</span>
+          </div>
+        </div>
+      </div>
+      <div class="sky-veil" aria-hidden="true"></div>
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Cloudkeepers home"
+          ><span class="brand-cloud"
+            ><svg><use href="#i-cloud" /></svg></span
+          ><span>Cloudkeepers<small>A SKY FULL OF FRIENDS</small></span></a
+        >
+        <div class="chapter-tag"><span></span> THE WORLD · CHAPTER ONE</div>
+        <div class="top-actions">
+          <button
+            class="round-button"
+            id="day-toggle"
+            aria-label="Change to moonlight"
+            aria-pressed="false"
+            title="Day or moonlight"
+          >
+            <svg class="icon"><use href="#i-sun" /></svg>
+          </button>
+          <button
+            class="round-button"
+            id="sound-toggle"
+            aria-label="Turn on gentle sounds"
+            aria-pressed="false"
+            title="Gentle sounds"
+          >
+            <svg class="icon"><use href="#i-muted" /></svg>
+          </button>
+          <button
+            class="profile-button"
+            id="profile-button"
+            data-open="profile"
+            aria-label="Choose your explorer"
+          >
+            <span class="avatar"><img src="assets/explorer.webp" alt="" /></span
+            ><span id="profile-name"
+              >Daniela<small>Little Cloudkeeper</small></span
+            ><span class="chevron">⌄</span>
+          </button>
+        </div>
+      </header>
+      <section class="island-heading" aria-labelledby="island-title">
+        <div class="eyebrow">
+          <svg class="icon"><use href="#i-leaf" /></svg> ISLAND 01
+          <span>OF 12</span>
+        </div>
+        <h1 id="island-title">
+          Clover Cove<span class="title-flower">✳</span>
+        </h1>
+        <p>A small island.<br />A sky-sized adventure.</p>
+        <div class="island-weather">
+          <span class="weather-dot"></span
+          ><span id="weather-label">A lovely day to explore</span>
+        </div>
+      </section>
+      <aside class="journey-card" aria-label="Your future adventure">
+        <div class="journey-head">
+          <span>OUR BIG LITTLE MISSION</span
+          ><svg class="icon"><use href="#i-star" /></svg>
+        </div>
+        <p>Bring every friend<br />home to the clouds.</p>
+        <div class="journey-row">
+          <span class="mini-icon"
+            ><svg class="icon"><use href="#i-paw" /></svg></span
+          ><span>Animal friends</span><strong>0 <small>/ 12</small></strong>
+        </div>
+        <div class="journey-progress" aria-label="No animals rescued yet">
+          <span></span>
+        </div>
+        <div class="journey-caption">Twelve islands. A whole lot of heart.</div>
+      </aside>
+      <section class="invitation" id="invitation">
+        <span class="invitation-icon"
+          ><svg class="icon"><use href="#i-paw" /></svg
+        ></span>
+        <div>
+          <span class="eyebrow">SOMEONE WANTS TO MEET YOU</span>
+          <h2>A friend in the ferns</h2>
+          <p>That little fox looks curious…</p>
+        </div>
+        <button class="primary-button" data-dialog="pip">
+          Meet Pip <svg class="icon"><use href="#i-arrow" /></svg>
+        </button>
+      </section>
+      <div class="movement-hint">
+        <span class="key">←</span><span class="key">↑</span
+        ><span class="key">↓</span><span class="key">→</span
+        ><span>to wander <i>·</i> or tap the grass</span>
+      </div>
+      <footer class="bottom-bar">
+        <nav class="explore-nav" aria-label="Explore Cloudkeepers">
+          <button class="nav-button" data-open="map">
+            <svg class="icon"><use href="#i-map" /></svg><span>Sky map</span
+            ><span class="nav-count">12</span>
+          </button>
+          <button class="nav-button" data-open="friends">
+            <svg class="icon"><use href="#i-paw" /></svg
+            ><span>Animal friends</span>
+          </button>
+          <button class="nav-button" data-open="explorer">
+            <svg class="icon"><use href="#i-compass" /></svg
+            ><span>My explorer</span>
+          </button>
+        </nav>
+        <div class="chapter-caption">
+          <span>✦</span> Every adventure begins with a little wonder.
+        </div>
+        <div class="bottom-actions">
+          <span class="preview-label">WORLD PREVIEW</span
+          ><button
+            class="round-button"
+            data-open="help"
+            aria-label="How to explore"
+          >
+            <svg class="icon"><use href="#i-help" /></svg></button
+          ><button
+            class="round-button fullscreen-button"
+            id="fullscreen"
+            aria-label="Full screen"
+          >
+            <svg class="icon"><use href="#i-expand" /></svg>
+          </button>
+        </div>
+      </footer>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="hearts" id="hearts" aria-hidden="true"></div>
+      <div class="travel-clouds" id="travel-clouds" aria-hidden="true"></div>
+    </main>
+    <dialog id="modal" class="modal" aria-labelledby="modal-title">
+      <button
+        class="close-button round-button"
+        id="close-modal"
+        aria-label="Close"
+      >
+        <svg class="icon"><use href="#i-close" /></svg>
+      </button>
+      <div id="modal-content"></div>
+    </dialog>
+    <script type="module" src="game.js"></script>
+  </body>
+</html>
