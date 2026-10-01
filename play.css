@@ -1,0 +1,1103 @@
+/* The adventure, maths, rewards, and homecoming. */
+.scenery {
+  filter: hue-rotate(var(--scene-hue, 0deg));
+}
+.game.night .scenery {
+  filter: brightness(0.66) saturate(0.75) hue-rotate(var(--scene-hue, 0deg));
+}
+.world-animal {
+  display: grid;
+  place-items: center;
+  font-size: calc(85px * var(--scale));
+  height: 100%;
+  text-shadow: 0 5px 5px #3c4a3130;
+  animation: breathe 4s ease-in-out infinite;
+}
+.world-animal[hidden] {
+  display: none;
+}
+.fox.wiggle .world-animal {
+  animation: wiggle 0.35s ease-in-out 3;
+}
+.title-flower {
+  font-size: 28px;
+}
+.island-heading h1 {
+  max-width: 400px;
+  font-size: 46px;
+}
+.island-heading p {
+  font-size: 14px;
+}
+.crew-bar {
+  position: absolute;
+  bottom: 166px;
+  left: 50%;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 8px 12px;
+  border-radius: 25px;
+  background: #fff9e6cf;
+  backdrop-filter: blur(8px);
+  z-index: 6;
+  box-shadow: var(--shadow);
+  white-space: nowrap;
+  max-width: 90%;
+  flex-wrap: wrap;
+}
+.crew-bar[hidden] {
+  display: none;
+}
+.crew-bar > span {
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  margin-right: 5px;
+}
+.crew-bar button {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  background: transparent;
+  border-radius: 50%;
+  transition: transform 0.2s;
+}
+.crew-bar button:hover {
+  transform: translateY(-5px);
+}
+.crew-bar small {
+  font-size: 9px;
+  font-weight: 800;
+  margin-left: 5px;
+}
+.primary-button:disabled,
+.secondary-button:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  transform: none;
+  cursor: default;
+}
+.primary-button:disabled:hover {
+  background: #4c765e;
+  transform: none;
+}
+.quest-intro {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 25px;
+  align-items: center;
+}
+.quest-portrait {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse, #ebe2c3, transparent 70%);
+}
+.reward-animal {
+  width: 180px;
+  height: 195px;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 6px #3f623321);
+}
+.reward-glyph {
+  display: grid;
+  place-items: center;
+  font-size: 112px;
+  filter: drop-shadow(0 8px 5px #3f623321);
+}
+.animal-glyph {
+  font-size: 40px;
+}
+.quest-stars {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 18px 0;
+}
+.quest-stars > span {
+  display: flex;
+  color: #cbd3b6;
+}
+.quest-stars .icon {
+  width: 30px;
+  height: 30px;
+  stroke-width: 1.5;
+}
+.quest-stars .earned {
+  color: #d4a050;
+  filter: drop-shadow(0 2px 3px #d6bd7425);
+}
+.quest-stars .earned .icon {
+  fill: #edcf87;
+}
+.quest-start-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.quest-start-buttons .primary-button {
+  font-size: 13px;
+}
+.quest-start-buttons .secondary-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.quest-start-buttons .secondary-button .icon {
+  width: 16px;
+  height: 16px;
+}
+.reward-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+  margin-top: 26px;
+}
+.reward-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #d9dec4;
+  background: #eceddb;
+  border-radius: 17px;
+  text-align: left;
+  min-height: 85px;
+}
+.reward-option > .icon {
+  width: 28px;
+  height: 28px;
+  color: #a0a97e;
+}
+.reward-option strong {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.reward-option small {
+  display: block;
+  font-size: 10px;
+  color: #8c9674;
+}
+.reward-option:disabled {
+  opacity: 0.6;
+}
+.reward-option:not(:disabled) {
+  border: 2px solid #8ca47a;
+  background: #e6ecd4;
+}
+.reward-option:not(:disabled):hover {
+  background: #dce7c6;
+}
+.reward-option.claimed {
+  opacity: 1;
+  background: #e6ecd4;
+}
+.reward-option.claimed .icon {
+  color: #5c815d;
+}
+.return-friends {
+  margin-top: 15px;
+}
+.quiz-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-right: 30px;
+}
+.quiz-header h2 {
+  font-size: 30px;
+}
+.difficulty-pill {
+  border: 1px solid #e0dfc7;
+  border-radius: 20px;
+  padding: 7px 12px;
+  font-size: 9px;
+  font-weight: 850;
+  white-space: nowrap;
+  background: #f1edda;
+  color: #899574;
+}
+.quiz-progress {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  border-bottom: 1px solid #e8e6d2;
+  margin-bottom: 22px;
+}
+.quiz-progress > span {
+  font-size: 10px;
+  font-weight: 800;
+  color: #8a9677;
+}
+.quiz-progress .quest-stars {
+  margin: 12px 0 17px;
+  gap: 7px;
+}
+.quiz-progress .icon {
+  width: 22px;
+  height: 22px;
+}
+.math-prompt {
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.5;
+  text-align: center;
+  max-width: 660px;
+  margin: auto;
+  color: #355a45;
+}
+.math-visual {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 15px auto 20px;
+  max-width: 620px;
+  min-height: 50px;
+}
+.math-counters {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: 360px;
+  font-size: 27px;
+  color: #cf9b45;
+}
+.math-counters span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  height: 32px;
+}
+.math-sign {
+  font-size: 25px;
+  font-weight: 800;
+  align-self: center;
+  margin: 0 5px;
+}
+.math-group {
+  background: #efecd9;
+  border: 1px solid #dbdec2;
+  border-radius: 13px;
+  padding: 8px;
+}
+.math-group .math-counters {
+  max-width: 110px;
+}
+.column-maths {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: ui-monospace, monospace;
+  font-size: 27px;
+  line-height: 1.5;
+  letter-spacing: 4px;
+  padding: 8px 22px;
+  background: #f3efdc;
+  border-radius: 15px;
+  min-width: 150px;
+}
+.column-line {
+  border-top: 2px solid #a5b48c;
+  align-self: stretch;
+  text-align: right;
+  color: #b18b4d;
+}
+.fraction-picture {
+  display: flex;
+  max-width: 450px;
+  width: 100%;
+  height: 68px;
+  border: 2px solid #8ba17c;
+  border-radius: 13px;
+  overflow: hidden;
+  background: #f4f0df;
+}
+.fraction-picture > span {
+  flex: 1;
+  border-right: 2px solid #8ba17c;
+}
+.fraction-picture > span:last-child {
+  border: 0;
+}
+.fraction-picture .filled {
+  background: #a6c194;
+}
+.place-value {
+  display: flex;
+  gap: 10px;
+}
+.place-value > span {
+  background: #e9ecd7;
+  border: 1px solid #d3d9b9;
+  border-radius: 13px;
+  text-align: center;
+  padding: 13px 20px;
+  min-width: 85px;
+  font-size: 27px;
+  font-weight: 850;
+}
+.place-value small {
+  display: block;
+  font-size: 10px;
+  color: #879473;
+  margin-bottom: 8px;
+}
+.math-clock {
+  width: 165px;
+  height: 165px;
+}
+.math-clock text {
+  font-family: Nunito, system-ui, sans-serif;
+  font-size: 14px;
+  fill: #608057;
+  font-weight: 800;
+}
+.math-shape {
+  width: 160px;
+  height: 145px;
+}
+.coin-row {
+  display: flex;
+  gap: 18px;
+}
+.coin-row > span {
+  display: grid;
+  place-items: center;
+  width: 66px;
+  height: 66px;
+  background: radial-gradient(#e5c894, #c9aa71);
+  border: 4px double #ae8c4f;
+  border-radius: 50%;
+  font-size: 22px;
+  font-weight: 900;
+  color: #7e653c;
+}
+.ribbons {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.ribbons > div {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.ribbons span {
+  height: 25px;
+  border-radius: 0 9px 9px 0;
+  box-shadow: 0 3px 0 #576d3820;
+}
+.perimeter-picture {
+  width: 200px;
+  text-align: center;
+  position: relative;
+  font-size: 14px;
+  font-weight: 800;
+}
+.perimeter-picture > div {
+  height: 90px;
+  border: 3px solid #83a075;
+  background: #d5e1bf;
+  margin: 8px;
+}
+.perimeter-picture > span:last-child {
+  position: absolute;
+  right: -40px;
+  top: 60px;
+}
+.math-chart {
+  height: 178px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 25px;
+  padding: 10px 20px 0;
+  border-bottom: 2px solid #b9c5a5;
+}
+.math-chart > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.math-chart > div > span {
+  width: 50px;
+  border-radius: 5px 5px 0 0;
+}
+.math-chart strong {
+  font-size: 14px;
+}
+.math-chart small {
+  font-size: 10px;
+  font-weight: 850;
+  position: relative;
+  bottom: -22px;
+}
+.answer-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 23px;
+}
+.answer-button {
+  min-height: 62px;
+  border: 2px solid #d9dfc7;
+  border-bottom: 5px solid #c7d1b3;
+  border-radius: 15px;
+  background: #f2f0df;
+  font-size: 22px;
+  font-weight: 850;
+  position: relative;
+  transition:
+    transform 0.15s,
+    background 0.15s;
+}
+.answer-button:hover:not(:disabled) {
+  background: #e2eacf;
+  transform: translateY(-2px);
+}
+.answer-button:active:not(:disabled) {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+.answer-number {
+  position: absolute;
+  left: 13px;
+  top: 50%;
+  translate: 0 -50%;
+  font-size: 10px;
+  border: 1px solid #d4dbc2;
+  background: #fff8e9;
+  border-radius: 6px;
+  min-width: 20px;
+  padding: 4px;
+}
+.answer-button:disabled {
+  opacity: 0.5;
+}
+.answer-button.correct-answer {
+  border-color: #7da373;
+  background: #d9e6c4;
+  opacity: 1;
+}
+.typed-answer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.typed-answer label {
+  font-size: 10px;
+  color: #8a9676;
+  font-weight: 750;
+}
+.typed-answer input {
+  width: 94px;
+  height: 40px;
+  padding: 8px 10px;
+  border: 1px solid #cbd5b7;
+  border-radius: 9px;
+  background: #fffdf3;
+  font:
+    800 18px Nunito,
+    sans-serif;
+  text-align: center;
+  color: #355a45;
+}
+.typed-answer .secondary-button {
+  min-height: 40px;
+  padding: 8px 14px;
+}
+.answer-feedback {
+  min-height: 24px;
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.7;
+  margin: 18px 0 12px;
+  border-radius: 12px;
+  display: flex;
+  gap: 9px;
+  justify-content: center;
+  align-items: center;
+}
+.answer-feedback.success {
+  padding: 13px 16px;
+  background: #e4eed4;
+  color: #4c764a;
+}
+.answer-feedback.retry {
+  padding: 12px 15px;
+  background: #f5ead2;
+  color: #887242;
+}
+.answer-feedback .icon {
+  fill: #dec181;
+  width: 20px;
+  height: 20px;
+  color: #b7924e;
+}
+.quiz-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.quiz-footer .secondary-button {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.quiz-footer .icon {
+  width: 16px;
+  height: 16px;
+}
+.text-button {
+  background: transparent;
+  font-size: 10px;
+  font-weight: 850;
+  color: #8a9878;
+  text-decoration: underline;
+  padding: 9px;
+}
+.map-island.locked {
+  opacity: 0.58;
+}
+.map-island.locked .island-mini {
+  filter: saturate(0.5);
+}
+.friend-card.met .friend-status {
+  color: #5f855b;
+}
+.level-settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 25px 0;
+}
+.level-settings label {
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.7;
+}
+.level-settings select {
+  display: block;
+  width: 100%;
+  padding: 12px 9px;
+  border: 1px solid #ccd6b7;
+  border-radius: 12px;
+  background: #eff0dc;
+  color: #3a5e46;
+  font:
+    700 11px Nunito,
+    system-ui;
+  margin-top: 8px;
+}
+.stats-overview {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 25px 0;
+  padding: 20px;
+  background: #edecd8;
+  border-radius: 18px;
+}
+.stats-overview > span {
+  text-align: center;
+  flex: 1;
+  font-size: 10px;
+  color: #869270;
+}
+.stats-overview strong {
+  display: block;
+  font-size: 25px;
+  color: #527653;
+  margin-bottom: 6px;
+}
+.skills-list > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 10px;
+  border-bottom: 1px solid #e5e6cf;
+  padding: 12px 0;
+  font-size: 11px;
+}
+.skills-list > div > span:first-child {
+  font-weight: 850;
+}
+.skills-list > div > span:nth-child(2) {
+  color: #8a977a;
+  font-size: 10px;
+}
+.skills-list small {
+  font-size: 9px;
+  color: #9a9b7d;
+}
+.stats-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+.victory-screen {
+  text-align: center;
+  padding: 18px;
+}
+.victory-star {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #f0e5bc;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 0 10px #f7efce;
+}
+.victory-star .icon {
+  width: 52px;
+  height: 52px;
+  fill: #e4c26d;
+  stroke: #be9751;
+}
+.victory-screen .eyebrow {
+  justify-content: center;
+  font-size: 9px;
+}
+.victory-screen h2 {
+  font-size: 44px;
+  margin-top: 18px;
+}
+.victory-screen p {
+  color: #7d8d70;
+  font-size: 14px;
+  line-height: 1.9;
+  margin: 15px 0 24px;
+}
+.homecoming-crew {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: 500px;
+  margin: 0 auto 24px;
+}
+.homecoming-crew > span {
+  font-size: 43px;
+  animation: marker-bob 2s ease-in-out infinite;
+}
+.homecoming-crew > span:nth-child(2n) {
+  animation-delay: -1s;
+}
+.victory-summary {
+  padding: 12px;
+  background: #eee8cd;
+  border-radius: 13px;
+  color: #929575;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 23px;
+}
+.victory-screen .dialogue-buttons {
+  justify-content: center;
+}
+.reward-glyph,
+.world-animal {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+}
+.game[data-island="3"] .island-heading,
+.game[data-island="9"] .island-heading {
+  color: #fff0cc;
+  text-shadow: 0 2px 10px #24324b40;
+}
+.game[data-island="3"] .island-heading p,
+.game[data-island="9"] .island-heading p {
+  color: #f5e8d5;
+}
+.game[data-island="3"] .island-weather,
+.game[data-island="9"] .island-weather {
+  color: #efe7d1;
+}
+@media (max-width: 1150px) {
+  .island-heading h1 {
+    font-size: 38px;
+    max-width: 340px;
+  }
+  .crew-bar {
+    left: 60%;
+    bottom: 151px;
+  }
+  .crew-bar > span {
+    display: none;
+  }
+  .crew-bar button {
+    width: 24px;
+    height: 24px;
+    font-size: 21px;
+  }
+  .chapter-caption {
+    max-width: 400px;
+    line-height: 1.5;
+  }
+}
+@media (max-width: 760px) {
+  .island-heading h1 {
+    font-size: 36px;
+    max-width: 350px;
+  }
+  .island-heading p {
+    font-size: 12px;
+  }
+  .title-flower {
+    font-size: 23px;
+  }
+  .crew-bar {
+    left: 50%;
+    bottom: 207px;
+    max-width: calc(100% - 40px);
+    gap: 3px;
+    padding: 6px 10px;
+  }
+  .crew-bar button {
+    width: 22px;
+    height: 22px;
+    font-size: 20px;
+  }
+  .crew-bar small {
+    font-size: 8px;
+    margin-left: 3px;
+  }
+  .quest-intro {
+    grid-template-columns: 1fr;
+    gap: 3px;
+    text-align: center;
+  }
+  .quest-portrait {
+    height: 133px;
+  }
+  .reward-animal {
+    height: 139px;
+    width: 140px;
+  }
+  .reward-glyph {
+    font-size: 90px;
+  }
+  .quest-intro .modal-intro {
+    padding: 0;
+  }
+  .quest-intro .eyebrow {
+    justify-content: center;
+  }
+  .quest-intro h2 {
+    font-size: 26px;
+  }
+  .quest-stars {
+    justify-content: center;
+    margin: 14px 0;
+  }
+  .quest-start-buttons {
+    justify-content: center;
+  }
+  .quest-start-buttons .primary-button {
+    font-size: 12px;
+  }
+  .quest-start-buttons .secondary-button {
+    font-size: 10px;
+  }
+  .reward-options {
+    gap: 9px;
+    margin-top: 20px;
+  }
+  .reward-option {
+    padding: 13px 10px;
+    gap: 8px;
+    min-height: 90px;
+    flex-direction: column;
+    text-align: center;
+  }
+  .reward-option .icon {
+    width: 22px;
+    height: 22px;
+  }
+  .reward-option strong {
+    font-size: 10px;
+  }
+  .reward-option small {
+    font-size: 9px;
+    line-height: 1.5;
+  }
+  .quiz-header {
+    align-items: flex-start;
+    gap: 10px;
+    padding-right: 24px;
+  }
+  .quiz-header h2 {
+    font-size: 24px;
+    line-height: 1.25;
+    margin-top: 9px;
+  }
+  .quiz-header .eyebrow {
+    font-size: 7px;
+    letter-spacing: 1px;
+  }
+  .difficulty-pill {
+    font-size: 8px;
+    padding: 5px 8px;
+    margin-top: 2px;
+    white-space: normal;
+    text-align: center;
+  }
+  .quiz-progress {
+    margin-bottom: 18px;
+  }
+  .quiz-progress .quest-stars {
+    gap: 5px;
+  }
+  .quiz-progress .icon {
+    width: 21px;
+    height: 21px;
+  }
+  .quiz-progress > span {
+    font-size: 9px;
+  }
+  .math-prompt {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  .math-counters {
+    font-size: 24px;
+    max-width: 290px;
+    gap: 4px;
+  }
+  .math-counters span {
+    width: 25px;
+    height: 28px;
+  }
+  .math-visual {
+    margin: 13px auto 18px;
+    gap: 8px;
+  }
+  .math-clock {
+    width: 151px;
+    height: 151px;
+  }
+  .column-maths {
+    font-size: 25px;
+    padding: 5px 22px;
+  }
+  .fraction-picture {
+    height: 55px;
+  }
+  .answer-options {
+    gap: 9px;
+    margin-top: 20px;
+  }
+  .answer-button {
+    font-size: 20px;
+    min-height: 56px;
+  }
+  .answer-number {
+    left: 8px;
+    font-size: 8px;
+    min-width: 16px;
+    padding: 3px;
+  }
+  .typed-answer {
+    gap: 7px;
+  }
+  .typed-answer label {
+    font-size: 8px;
+  }
+  .typed-answer input {
+    width: 76px;
+    height: 37px;
+  }
+  .typed-answer .secondary-button {
+    min-height: 37px;
+    font-size: 10px;
+  }
+  .answer-feedback {
+    font-size: 11px;
+    margin: 14px 0 10px;
+  }
+  .quiz-footer {
+    gap: 8px;
+  }
+  .quiz-footer .primary-button {
+    font-size: 11px;
+  }
+  .quiz-footer .secondary-button {
+    font-size: 9px;
+    padding: 10px;
+  }
+  .quiz-footer .text-button {
+    font-size: 8px;
+  }
+  .place-value > span {
+    min-width: 72px;
+    padding: 10px 14px;
+  }
+  .place-value small {
+    font-size: 9px;
+  }
+  .math-chart {
+    gap: 20px;
+    height: 165px;
+    margin-bottom: 16px;
+  }
+  .math-chart > div > span {
+    width: 44px;
+  }
+  .math-chart small {
+    font-size: 9px;
+  }
+  .perimeter-picture {
+    width: 163px;
+  }
+  .perimeter-picture > span:last-child {
+    right: -37px;
+  }
+  .stats-overview {
+    padding: 15px 10px;
+    gap: 9px;
+  }
+  .stats-overview strong {
+    font-size: 22px;
+  }
+  .stats-overview > span {
+    font-size: 8px;
+  }
+  .skills-list > div {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    font-size: 10px;
+  }
+  .skills-list small {
+    grid-column: 2;
+    font-size: 8px;
+  }
+  .level-settings {
+    grid-template-columns: 1fr;
+    gap: 13px;
+  }
+  .stats-actions {
+    flex-wrap: wrap;
+  }
+  .victory-screen {
+    padding: 12px 0;
+  }
+  .victory-screen h2 {
+    font-size: 32px;
+  }
+  .victory-screen p {
+    font-size: 12px;
+  }
+  .victory-screen .eyebrow {
+    font-size: 7px;
+    letter-spacing: 1.3px;
+  }
+  .homecoming-crew {
+    gap: 8px;
+  }
+  .homecoming-crew > span {
+    font-size: 37px;
+  }
+  .victory-summary {
+    font-size: 9px;
+  }
+  .modal .modal-note {
+    font-size: 9px;
+  }
+  .return-friends {
+    font-size: 10px;
+  }
+  .game[data-island="3"] .world,
+  .game[data-island="9"] .world {
+    background: linear-gradient(#27385a, #a5abc4 60%, #d6c6c5);
+  }
+}
+@media (max-height: 500px) {
+  .crew-bar {
+    bottom: 118px;
+    left: 65%;
+    max-width: 50%;
+  }
+  .crew-bar button {
+    width: 22px;
+    height: 22px;
+    font-size: 20px;
+  }
+  .quest-intro {
+    grid-template-columns: 130px 1fr;
+  }
+  .quest-portrait {
+    height: 150px;
+  }
+  .reward-animal {
+    height: 148px;
+    width: 140px;
+  }
+  .reward-options {
+    margin-top: 16px;
+  }
+  .quiz-header h2 {
+    font-size: 25px;
+  }
+  .math-prompt {
+    font-size: 19px;
+  }
+  .math-visual {
+    margin: 10px auto;
+  }
+  .math-clock {
+    width: 130px;
+    height: 130px;
+  }
+  .answer-button {
+    min-height: 50px;
+  }
+  .modal {
+    max-height: calc(100dvh - 18px);
+  }
+  .game .island-heading h1 {
+    font-size: 31px;
+  }
+}
+
+.crew-bar button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  scale: 1.2;
+}
+.homecoming-crew > span {
+  width: 62px;
+  height: 62px;
+}
+.homecoming-crew img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+@media (max-width: 760px) {
+  .homecoming-crew > span {
+    width: 48px;
+    height: 48px;
+  }
+}

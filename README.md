@@ -1,43 +1,52 @@
 # Cloudkeepers
 
-A family-designed browser adventure about a little explorer who rescues animals across twelve floating islands.
+A complete playable family browser game: rescue twelve animals across floating islands, unlock twelve ways to travel, and bring everyone home. Built with plain HTML, CSS and JavaScript, original local artwork, and no runtime dependencies, accounts or external services.
 
-## Current chapter: the world and its characters
-
-**Objective:** Make the first island tangible, beautiful, and fun to explore so Sofia and Daniela can shape its art direction.
-
-**Constraints:** Visual prototype only; no maths exercises, earned rescues, curriculum claims, or completed level system. Keep it child-friendly, responsive, and independent of other projects. No accounts or external services.
-
-**Owner:** The family owns the creative decisions; this project owns its scene, controls, and local preferences.
-
-**Simplest path:** Plain HTML, CSS, and JavaScript, original local artwork, and a small Node static server. No dependencies or install step.
-
-**Proof:** Open the real browser scene; walk using keyboard and touch; meet Pip; view the twelve-island concept map and animal journal; try day/night and both player profiles; check mobile layout and browser errors.
-
-**Stop:** End this chapter after the visual prototype. Design the island progression with the family next, then the maths repertoire and adaptive learning.
-
-## Run
+## Play
 
 ```sh
 cd /Users/juancamilo/dev/cloudkeepers
 npm run dev
 ```
 
-Open http://127.0.0.1:4317. Use arrow keys/WASD or tap the grass to walk. Click Pip, the cottage, the signpost, or the sky ferry. The bottom buttons open the map, journal, and explorer customisation. Preferences are stored on this browser separately for Daniela and Sofia; this is not learning progress.
+Open http://127.0.0.1:4317. Choose **Daniela** (Year 1) or **Sofia** (Year 3) at the top. Both explorers have independent saved adventures and maths settings. Settings also offer UK pounds/pence or UAE dirhams.
 
-`npm run build` creates a dependency-free static site in `dist/`. `npm run preview` serves that build at the same port. `PORT` can select another local port.
+- Tap **Start adventure** or the island animal to begin.
+- Answer using the choices or by typing a numeric answer.
+- Each correct answer earns one cloud star. Mistakes never remove stars. Hints and read-aloud support the learner; there is no timer.
+- At **3 stars**, unlock the transport. Travel onward when you choose.
+- At **5 stars**, rescue the animal. Every rescued friend stays in your travelling crew.
+- Use the sky map to return to any open island for missed friends.
+- Win by rescuing all twelve animals, reaching **Cloudkeeper Haven**, and lighting its home beacon. Arrival alone is not enough.
+
+Walk with arrow keys/WASD or tap the grass. The cottage, journal, map and explorer are interactive. Day/moonlight, gentle synthesized sounds and explorer glow are optional.
+
+Progress saves automatically in this browser on this device. Reload resumes the active question. Browser storage must be available for persistent saves; changing browsers/devices does not transfer progress. Read-aloud uses the browser's installed speech voices.
+
+## Maths and progression
+
+The twelve islands introduce place value, addition, subtraction, multiplication, division, fractions of amounts, fractions, money, measurement, time, shapes/perimeter and charts. The final island mixes chart questions with earlier topics.
+
+Year 1 uses counting, smaller numbers, sharing and grouping, halves/quarters, simple money, comparing lengths, o'clock/half past and basic shapes/charts. Year 3 adds hundreds/tens/ones, three-digit arithmetic and exchanging, 3/4/8 tables and two-digit × one-digit, unit/non-unit fractions, tenths, equivalence and same-denominator operations, change, metric conversions, five-minute clocks/durations/Roman clock faces, perimeter and interpreting charts.
+
+This repertoire practises selected skills from the [English mathematics programmes of study](https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study). It is a game for practice, not a complete replacement for the school programme. Feedback from Sofia and Daniela will guide the next content and design changes.
+
+Questions are generated from numbers and templates, with no AI service. Recent questions are avoided, choices never contain equivalent duplicates, and fraction equivalence is recognised when checking answers. Each topic has three difficulty bands: three clean first-try answers raise the band; two incorrect attempts lower it. Hint-assisted/retried answers earn stars without forcing harder questions. Year 1 and Year 3 keep separate skill records. Grown-up corner shows practice totals and topic summaries, and can reset just the selected explorer.
+
+## Build and verify
+
+```sh
+npm test
+npm run build
+npm run preview
+```
+
+The build is a self-contained static site in `dist/`. Use `preview` after stopping the dev server, or choose another port with `PORT=4318 npm run preview`. Hosting can serve the contents of `dist/` directly. All artwork and fonts are local; there is no analytics or network API.
+
+Tests sample 14,400 generated questions, independently check arithmetic from learner-facing prompts, simulate both complete journeys with backtracking, validate save/restore and adaptive rules, and reject stale/double answer submissions. Browser QA covers wrong/right/typed answers, rewards, travel/backtracking, crew, profiles, reload and small screens.
 
 ## Making it together
 
-The family's next small creative task is to describe the hero: a name, an outfit, and one special thing they carry. After that, decide what to change in the first island's appearance.
+Sofia can start by changing one animal's name or island story in **adventure.js**, saving and reloading to see it in the map, journal and scene. The `ISLANDS` list is deliberately readable. Transport drawings live in **vehicles.js**; maths templates and hints in **questions.js**. **journey-ui.js** connects rules to the game, while **game.js** handles walking, profiles, sound and scenery. **style.css** and **play.css** define the visual design.
 
-For Sofia's first coding sessions, `game.js` keeps the tentative island stories in the `islands` list and animal ideas in `friends`. Changing one name or description there is a small, visible edit: save, reload, and open the sky map or journal to see the result. The numbered empty islands deliberately leave room for her own designs.
-
-## The next two chapters
-
-1. **Island progression:** Agree on the twelve animal and travel pairings, level order, and how travel differs from rescuing. Winning eventually requires all twelve animals together on the final island.
-2. **Maths challenges:** Build curriculum-aligned challenge types for each child, followed by a varied question repertoire and adaptive difficulty. The present concept map does not assign levels or curriculum topics.
-
-## Artwork
-
-Original scenery and character cutouts created using the built-in image generation tool. Prompts and asset roles are in [ART_DIRECTION.md](ART_DIRECTION.md). Final assets live in `assets/`.
+The first beta includes five scenic environments with themed variants across twelve islands, twelve animal characters, and twelve SVG transports. Original asset prompts and roles are documented in [ART_DIRECTION.md](ART_DIRECTION.md). Nothing is deployed publicly.

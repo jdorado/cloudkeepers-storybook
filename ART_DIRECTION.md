@@ -1,10 +1,10 @@
-# Cloudkeepers — first visual chapter
+# Cloudkeepers — art direction
 
 Warm storybook miniature, tactile foliage, terracotta rock, cream and peach clouds, sage green, amber gold. The little explorer is a provisional concept; the child co-designer owns the final character description.
 
 ## Generated assets
 
-Built-in `image_gen.imagegen` was used for all three original raster assets. Local WebP copies preserve character transparency and make the entire site independent of external image hosts. The source PNGs remain in the Codex generated-image library.
+Built-in `image_gen.imagegen` was used for the original scenery, explorer, fox, four-world environment atlas and twelve-animal atlas. Local WebP copies preserve character transparency and make the entire site independent of external image hosts. The source PNGs remain in the Codex generated-image library.
 
 ### `assets/clover-cove.webp`
 
@@ -30,6 +30,22 @@ Generation prompt:
 
 ## Code assets and typography
 
-The sky ferry, cloud logo, and UI symbols are original inline SVGs. Future island and animal thumbnails are clearly labelled concept ideas, with open spaces for the family's designs; they are not twelve completed levels.
+The cloud logo and UI symbols are original inline SVGs. Twelve distinct transports in vehicles.js cover a rope bridge, zeppelin, sailboat, balloon, leaf glider, kite, cloud sled, propeller plane, dragonfly wings, moon rocket, rainbow bridge and home beacon. Twelve playable islands share five environmental artworks with themed colour variants. The animal journal, scene, crew and homecoming all use the generated character cutouts.
 
 Nunito is bundled locally as `assets/nunito.woff2`. Its SIL Open Font License is preserved in `assets/Nunito-OFL.txt`. Main titles use the system Georgia serif.
+
+## Four-world environment atlas
+
+Source: `exec-70b7f9b7-523a-49a9-b8bc-4a397133cc29.png` in the Codex generated-image library. Reference: Clover Cove for style. The regular 2×2 atlas was cropped exactly at its middle into **sunflower.webp**, **coral.webp**, **frost.webp**, and **moonbeam.webp**. Only cropping and WebP compression were applied.
+
+Generation prompt:
+
+> Use case: stylized-concept. Asset type: a production game environment atlas, FOUR separate horizontal landscape backgrounds arranged in a perfectly regular 2 by 2 grid. Overall canvas wide 16:10, so each exact equal quadrant is also a 16:10 landscape. These will be cut at precisely the middle horizontally and vertically into four independent background images, so all subjects must stay inside their own quadrant. No gaps, no borders, no text. Use the supplied floating island image as rendering style reference: a premium cozy storybook 3D miniature island in a sea of clouds, viewed isometric three quarter from above. In EVERY quadrant the island spans x 18%-95% and y 32%-88% of that quadrant, with a LARGE completely empty broad flat grassy or sandy oval clearing in the exact middle lower center (x 30-77%, y 42-63%) where game characters will stand; a tiny thematic cottage at x 70%,y 30%; wood dock at far right x 91%,y 51%. Top left 25% of each quadrant is calm sky for UI. NO characters, animals, UI or vehicles anywhere. Four different worlds: TOP LEFT: lush sunny island with giant sunflowers, golden meadows, distant island in warm turquoise sky, inviting cottage. TOP RIGHT: beautiful coral lagoon island with a small turquoise pool toward back, shells, pink coral flower trees, sandy central clearing, calm ocean-blue sky with peach clouds, shell-roof cottage. BOTTOM LEFT: snowy crystal island with snow-dusted pine trees, icy turquoise waterfall, glowing pale blue crystals around edges, broad empty snow clearing, cosy cabin, lavender pale sky and soft clouds, safe magical winter vibe. BOTTOM RIGHT: enchanted moonbeam garden island with luminous violet trees and glowing mushrooms around edges, broad empty jade grassy clearing, tiny whimsical purple-roof cottage, deep twilight teal sky and dreamy lavender clouds. Consistent tactile handmade materials, sophisticated detailed 3D clay game rendering, cinematic ambient occlusion, beautiful warm soft lighting, charming and lush, child-friendly, high detail. All four backgrounds completely independent and cropped exactly at center boundaries. Largest available resolution. This is game scenery only, no text, no characters, no animals.
+
+## Twelve-animal atlas
+
+Source: `exec-ea12457f-0243-4392-9e31-df03b569bdd7.png` in the Codex generated-image library. Reference: Pip for consistent style; transparent background enabled. The 1448×1086 atlas has twelve 362×362 cells. Eleven new cells were cropped and compressed to local WebP files, retaining alpha. The original Pip cutout is retained.
+
+Generation prompt:
+
+> Use case: stylized-concept. Asset type: ONE complete production animal sprite atlas for Cloudkeepers, a premium cozy children's sky-island browser game. Create twelve INDIVIDUAL baby animal full body cutouts in a perfectly regular 4-column by 3-row grid on genuinely TRANSPARENT background, no colored grid, no ground, no text. Wide landscape canvas ratio 4:3 with twelve equal SQUARE cells. Each animal centered INSIDE its own square cell, visible entire body, generous clear margin 15% within each cell, never cross a cell boundary. Match the supplied fox's premium handmade 3D clay storybook game style, soft warm light from upper left, huge kind glossy eyes, adorable slightly oversized heads, tactile fur/materials, welcoming gentle smiles. Each wears a tiny sage green scarf with a small golden star; each is a distinct species with clear recognizable ears, faces, tails. EXACT layout left to right: TOP ROW: (1) rusty orange baby fox with cream tail, (2) cream baby rabbit with peach inner ears, (3) cute green baby turtle with amber patterned shell, (4) soft lavender and cream baby owl. MIDDLE ROW: (5) black and white baby panda, (6) gray baby koala with fluffy ears, (7) baby penguin black white soft blue with golden beak, (8) tiny tan hedgehog with rounded brown soft quills. BOTTOM ROW: (9) bright mint green friendly frog sitting, (10) cream ginger baby kitten, (11) tawny fawn deer with white spots and small antler buds, (12) golden fluffy baby puppy with floppy ears. Front three quarter poses, consistent camera and rendering and scale, subjects occupy 70% of each square cell, all animals sit except little standing fawn. No extras, no scenery, no UI, no words, no borders, no cast ground rectangles, transparent alpha. This is a sprite atlas that will be cut into twelve square files exactly at quarter-width and third-height boundaries.

@@ -7,7 +7,17 @@ const root = fileURLToPath(
   new URL(process.argv.includes("--dist") ? "./dist/" : "./", import.meta.url),
 );
 const port = Number(process.env.PORT || 4317);
-const allowed = new Set(["index.html", "style.css", "game.js", "assets"]);
+const allowed = new Set([
+  "index.html",
+  "style.css",
+  "play.css",
+  "game.js",
+  "adventure.js",
+  "questions.js",
+  "journey-ui.js",
+  "vehicles.js",
+  "assets",
+]);
 const types = {
   ".html": "text/html",
   ".css": "text/css",
