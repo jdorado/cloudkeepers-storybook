@@ -1,5 +1,8 @@
 # Cloudkeepers
 
+Canonical local checkout: `/Users/juancamilo/dev/other/cloudkeepers-storybook`.
+New browser games belong under `/Users/juancamilo/dev/other/<repository-name>`.
+
 Standalone family browser game. This is not an AIFit or Ez project.
 
 - The family has now authorised the complete playable game: 12 islands, Year 1 and Year 3 maths, adaptive questions, separate player saves, animal rescues, travel unlocks, and a homecoming requiring all twelve animals.

@@ -5,7 +5,7 @@ A complete playable family browser game: rescue twelve animals across floating i
 ## Play
 
 ```sh
-cd /Users/juancamilo/dev/cloudkeepers
+cd /Users/juancamilo/dev/other/cloudkeepers-storybook
 npm run dev
 ```
 
