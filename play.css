@@ -609,6 +609,16 @@
     system-ui;
   margin-top: 8px;
 }
+.level-settings input {
+  width: 100%;
+  border: 1px solid #315c4a33;
+  border-radius: 12px;
+  background: #fffdf6;
+  color: var(--ink);
+  padding: 11px 12px;
+  font: inherit;
+  font-weight: 750;
+}
 .stats-overview {
   display: flex;
   justify-content: space-between;

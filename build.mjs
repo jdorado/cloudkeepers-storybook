@@ -12,9 +12,16 @@ for (const file of [
   "questions.js",
   "journey-ui.js",
   "vehicles.js",
+  "library.js",
+  "cloud-save.js",
+  "id.js",
+  "manifest.webmanifest",
 ])
   await copyFile(new URL(file, root), new URL(file, dist));
 await cp(new URL("assets/", root), new URL("assets/", dist), {
+  recursive: true,
+});
+await cp(new URL("icons/", root), new URL("icons/", dist), {
   recursive: true,
 });
 console.log("Cloudkeepers built in dist/ — all assets are local.");

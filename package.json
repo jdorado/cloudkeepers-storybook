@@ -1,16 +1,25 @@
 {
-  "name": "cloudkeepers",
-  "version": "0.1.0-beta.1",
+  "name": "cloudkeepers-storybook",
+  "version": "1.0.0",
   "private": true,
-  "description": "A floating-island maths adventure, designed with Sofia and Daniela.",
+  "description": "A floating-island maths adventure for young learners.",
   "type": "module",
   "scripts": {
     "dev": "node server.mjs",
     "build": "node build.mjs",
     "preview": "node server.mjs --dist",
-    "test": "node test.mjs"
+    "test": "node --test test.mjs test/*.test.mjs"
   },
+  "dependencies": {
+    "@clerk/backend": "^3.21.1",
+    "mongodb": "^7.7.0"
+  },
+  "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=24 <26"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jdorado/cloudkeepers-storybook.git"
   }
 }

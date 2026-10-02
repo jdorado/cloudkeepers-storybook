@@ -75,9 +75,6 @@ export function createJourneyUI(hooks) {
       `${(count / 12) * 100}%`;
     document.querySelector(".journey-caption").textContent =
       `${s.islands.filter((x) => x.unlocked).length} islands open · ${record.stars}/5 stars here`;
-    document.querySelector(".preview-label").textContent = s.won
-      ? "ALL FRIENDS HOME"
-      : "SAVED ON THIS BROWSER";
     document.querySelector(".chapter-caption").innerHTML =
       `<span>✦</span> ${s.won ? "You brought every friend home." : island.description.split(".")[0] + "."}`;
     document.querySelector("#invitation .eyebrow").textContent = record.rescued
@@ -185,17 +182,16 @@ export function createJourneyUI(hooks) {
   }
   function renderProfiles() {
     const s = state();
-    content.innerHTML = `${header("EVERY CLOUDKEEPER HAS A STORY", "Who’s exploring today?", "Each explorer has their own animals, islands, questions, and maths level.")}<div class="profile-grid">${[
-      "Daniela",
-      "Sofia",
-    ]
-      .map((name) => {
-        const p = hooks.player(name).adventure;
-        return `<button class="player-option ${hooks.playerName() === name ? "selected" : ""}" data-player="${name}" aria-pressed="${hooks.playerName() === name}"><img src="assets/explorer.webp" alt="Cloudkeeper explorer"><h3>${name}</h3><p>Year ${p.year} · ${rescuedCount(p)}/12 animal friends</p></button>`;
+    content.innerHTML = `${header("EVERY CLOUDKEEPER HAS A STORY", "Who’s exploring today?", "Each explorer has their own animals, islands, questions, and maths level.")}<div class="profile-grid">${hooks
+      .profileEntries()
+      .map(([id, profile]) => {
+        const p = profile.data.adventure;
+        const selected = hooks.currentProfileId() === id;
+        return `<button class="player-option ${selected ? "selected" : ""}" data-player="${id}" aria-pressed="${selected}"><img src="assets/explorer.webp" alt="Cloudkeeper explorer"><h3>${escapeText(profile.nickname)}</h3><p>Year ${p.year} · ${rescuedCount(p)}/12 animal friends</p></button>`;
       })
       .join(
         "",
-      )}</div><div class="level-settings"><label>Maths level for ${hooks.playerName()}<select id="maths-year" aria-label="Maths level for ${hooks.playerName()}"><option value="1" ${s.year === 1 ? "selected" : ""}>Year 1 · Counting and little steps</option><option value="3" ${s.year === 3 ? "selected" : ""}>Year 3 · Bigger numbers and new ideas</option></select></label><label>Money questions<select id="money-currency" aria-label="Money questions"><option value="GBP" ${s.currency === "GBP" ? "selected" : ""}>UK pounds and pence</option><option value="AED" ${s.currency === "AED" ? "selected" : ""}>UAE dirhams</option></select></label></div><button class="secondary-button" data-game="stats">Grown-up corner ${icon("book")}</button><div class="modal-note">${icon("check")} Progress saves automatically on this browser. Difficulty adapts within the selected year.</div>`;
+      )}</div><div class="level-settings"><label>Explorer nickname<input id="player-nickname" maxlength="30" autocomplete="off" value="${escapeText(hooks.playerName())}" aria-label="Explorer nickname"></label><label>Maths level for ${escapeText(hooks.playerName())}<select id="maths-year" aria-label="Maths level for ${escapeText(hooks.playerName())}"><option value="1" ${s.year === 1 ? "selected" : ""}>Year 1 · Counting and little steps</option><option value="3" ${s.year === 3 ? "selected" : ""}>Year 3 · Bigger numbers and new ideas</option></select></label><label>Money questions<select id="money-currency" aria-label="Money questions"><option value="GBP" ${s.currency === "GBP" ? "selected" : ""}>UK pounds and pence</option><option value="AED" ${s.currency === "AED" ? "selected" : ""}>UAE dirhams</option></select></label></div><button class="secondary-button" data-game="stats">Grown-up corner ${icon("book")}</button><div class="modal-note">${icon("check")} Progress saves automatically. Signed-in families can continue on another device.</div>`;
   }
   function renderStats() {
     const s = state(),
@@ -210,7 +206,7 @@ export function createJourneyUI(hooks) {
     )}</div><p class="help-footer">Based on the English Year 1 and Year 3 maths programmes. This game practises selected skills; your school’s lessons and written work remain important. Wrong answers are retries, with no lost stars.</p><div class="stats-actions"><button class="secondary-button" data-game="profile">Explorer settings</button><button class="text-button" data-game="reset-confirm">Start this explorer’s journey again</button></div>`;
   }
   function renderHelp() {
-    content.innerHTML = `${header("A LITTLE HELP FOR YOUR ADVENTURE", "Twelve islands. Twelve new friends.", "No timer, no rush. A kind heart and a little maths will take you far.")}<div class="help-grid"><div class="help-card">${icon("star")}<h3>Earn cloud stars</h3><p>Tap Start adventure or your island animal. Answer a question to earn one star. Hints help you learn; mistakes never take stars away.</p></div><div class="help-card">${icon("map")}<h3>Unlock your ride</h3><p>At 3 stars, unlock the island’s transport. You can travel onward and use the sky map to return to open islands.</p></div><div class="help-card">${icon("paw")}<h3>Rescue your friend</h3><p>At 5 stars, tap Rescue to add the animal to your crew. Every rescued friend travels with you.</p></div><div class="help-card">${icon("heart")}<h3>Bring everyone home</h3><p>Rescue all 12 animals, reach Cloudkeeper Haven, and light its home beacon. That’s how a Cloudkeeper wins!</p></div></div><p class="help-footer">Wander using arrow keys, W A S D, or a tap on the grass. Choose Daniela or Sofia at the top. Sunshine, moonlight, and soft sounds are yours to explore.</p><button class="secondary-button" data-game="profile">Choose explorer and maths level</button>`;
+    content.innerHTML = `${header("A LITTLE HELP FOR YOUR ADVENTURE", "Twelve islands. Twelve new friends.", "No timer, no rush. A kind heart and a little maths will take you far.")}<div class="help-grid"><div class="help-card">${icon("star")}<h3>Earn cloud stars</h3><p>Tap Start adventure or your island animal. Answer a question to earn one star. Hints help you learn; mistakes never take stars away.</p></div><div class="help-card">${icon("map")}<h3>Unlock your ride</h3><p>At 3 stars, unlock the island’s transport. You can travel onward and use the sky map to return to open islands.</p></div><div class="help-card">${icon("paw")}<h3>Rescue your friend</h3><p>At 5 stars, tap Rescue to add the animal to your crew. Every rescued friend travels with you.</p></div><div class="help-card">${icon("heart")}<h3>Bring everyone home</h3><p>Rescue all 12 animals, reach Cloudkeeper Haven, and light its home beacon. That’s how a Cloudkeeper wins!</p></div></div><p class="help-footer">Wander using arrow keys, W A S D, or a tap on the grass. Choose an explorer at the top. Sunshine, moonlight, and soft sounds are yours to explore.</p><button class="secondary-button" data-game="profile">Choose explorer and maths level</button>`;
   }
   function renderVictory() {
     const s = state();
@@ -395,6 +391,11 @@ export function createJourneyUI(hooks) {
     }
     answer(state().session.question.id, input.value);
   });
+  document.addEventListener("input", (event) => {
+    if (event.target.id !== "player-nickname") return;
+    const nickname = event.target.value.trim().slice(0, 30);
+    if (nickname) hooks.renamePlayer(hooks.currentProfileId(), nickname);
+  });
   document.addEventListener("change", (event) => {
     if (event.target.id === "maths-year") {
       changeYear(state(), Number(event.target.value));
@@ -406,6 +407,13 @@ export function createJourneyUI(hooks) {
       state().session = null;
       save();
       toast("Money questions updated.");
+    } else if (event.target.id === "player-nickname") {
+      const nickname = event.target.value.trim().slice(0, 30);
+      if (!nickname) {
+        event.target.value = hooks.playerName();
+        return;
+      }
+      toast(`Hello, ${nickname}!`);
     }
   });
   return {

@@ -16,6 +16,11 @@ const allowed = new Set([
   "questions.js",
   "journey-ui.js",
   "vehicles.js",
+  "library.js",
+  "cloud-save.js",
+  "id.js",
+  "manifest.webmanifest",
+  "icons",
   "assets",
 ]);
 const types = {
@@ -26,6 +31,7 @@ const types = {
   ".png": "image/png",
   ".webp": "image/webp",
   ".woff2": "font/woff2",
+  ".webmanifest": "application/manifest+json",
 };
 
 createServer(async (req, res) => {

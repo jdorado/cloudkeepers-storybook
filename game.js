@@ -1,5 +1,11 @@
-import { newAdventure, restoreAdventure } from "./adventure.js";
 import { createJourneyUI } from "./journey-ui.js";
+import {
+  createLibrary,
+  GUEST_STORAGE_KEY,
+  profileEntries,
+  restoreLibrary,
+} from "./library.js";
+import { setupCloud } from "./cloud-save.js";
 const $ = (selector) => document.querySelector(selector);
 const game = $("#game");
 const artboard = $("#artboard");
@@ -8,48 +14,32 @@ const fox = $("#fox");
 const modal = $("#modal");
 const content = $("#modal-content");
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const storageKey = "cloudkeepers.world.v1";
-const playerNames = ["Daniela", "Sofia"];
 const glows = [
   { name: "Golden sunlight", color: "#e7bd67" },
   { name: "Leaf green", color: "#89b890" },
   { name: "Peach blossom", color: "#dfa09b" },
 ];
-let preferences = {
-  player: "Daniela",
-  players: {
-    Daniela: { glow: 0, metPip: false, adventure: newAdventure(1) },
-    Sofia: { glow: 0, metPip: false, adventure: newAdventure(3) },
-  },
-  night: false,
-};
-try {
-  const saved = JSON.parse(localStorage.getItem(storageKey));
-  if (saved && playerNames.includes(saved.player)) {
-    preferences.player = saved.player;
-    preferences.night = saved.night === true;
-    for (const name of playerNames) {
-      preferences.players[name].glow = [0, 1, 2].includes(
-        saved.players?.[name]?.glow,
-      )
-        ? saved.players[name].glow
-        : 0;
-      preferences.players[name].metPip = saved.players?.[name]?.metPip === true;
-      preferences.players[name].adventure = restoreAdventure(
-        saved.players?.[name]?.adventure,
-        name === "Daniela" ? 1 : 3,
-      );
-    }
-  }
-} catch {
-  /* The world also works with browser storage disabled. */
-}
-const save = () => {
+const readGuest = () => {
   try {
-    localStorage.setItem(storageKey, JSON.stringify(preferences));
-  } catch {}
+    return restoreLibrary(JSON.parse(localStorage.getItem(GUEST_STORAGE_KEY)));
+  } catch {
+    return createLibrary();
+  }
 };
-const currentPlayer = () => preferences.players[preferences.player];
+let preferences = readGuest();
+let activeCloud = null;
+let journey;
+const save = () => {
+  if (activeCloud?.userId) activeCloud.save(preferences);
+  else {
+    try {
+      localStorage.setItem(GUEST_STORAGE_KEY, JSON.stringify(preferences));
+    } catch {}
+  }
+};
+const selectedProfile = () => preferences.profiles[preferences.selectedProfileId];
+const currentPlayer = () => selectedProfile().data;
+const playerName = () => selectedProfile().nickname;
 const icon = (name, className = "icon") =>
   `<svg class="${className}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 let position = { x: 52, y: 57 };
@@ -85,24 +75,29 @@ function fitWorld() {
 new ResizeObserver(fitWorld).observe(game);
 
 function updatePlayer() {
-  $("#player-label").textContent = preferences.player;
+  $("#player-label").textContent = playerName();
   explorer.setAttribute(
     "aria-label",
-    `Meet ${preferences.player}'s Cloudkeeper`,
+    `Meet ${playerName()}'s Cloudkeeper`,
   );
   game.style.setProperty("--magic-color", glows[currentPlayer().glow].color);
   journey.update();
 }
 
 function updateNight() {
-  game.classList.toggle("night", preferences.night);
-  $("#day-toggle").setAttribute("aria-pressed", String(preferences.night));
+  game.classList.toggle("night", preferences.preferences.night);
+  $("#day-toggle").setAttribute(
+    "aria-pressed",
+    String(preferences.preferences.night),
+  );
   $("#day-toggle").setAttribute(
     "aria-label",
-    preferences.night ? "Change to sunshine" : "Change to moonlight",
+    preferences.preferences.night ? "Change to sunshine" : "Change to moonlight",
   );
-  $("#day-toggle").innerHTML = icon(preferences.night ? "moon" : "sun");
-  $("#weather-label").textContent = preferences.night
+  $("#day-toggle").innerHTML = icon(
+    preferences.preferences.night ? "moon" : "sun",
+  );
+  $("#weather-label").textContent = preferences.preferences.night
     ? "A little magic in the moonlight"
     : "A lovely day to explore";
 }
@@ -174,7 +169,7 @@ function heading(kicker, title, description = "") {
   return `<div class="modal-intro"><div class="eyebrow">${kicker}</div><h2 id="modal-title">${title}</h2>${description ? `<p>${description}</p>` : ""}</div>`;
 }
 function renderExplorer() {
-  content.innerHTML = `${heading("SMALL EXPLORER · BIG HEART", `${preferences.player}’s Cloudkeeper`, "A golden scarf, a star compass, and a pocket full of possibility.")}
+  content.innerHTML = `${heading("SMALL EXPLORER · BIG HEART", `${playerName()}’s Cloudkeeper`, "A golden scarf, a star compass, and a pocket full of possibility.")}
     <div class="explorer-layout"><div class="explorer-preview" style="--magic-color:${glows[currentPlayer().glow].color}"><img src="assets/explorer.webp" alt="Your little explorer with a leafy cap, golden scarf, green overalls, backpack, and star compass"></div>
     <div class="explorer-custom"><h3>Choose your magic glow</h3><div class="color-swatches">${glows.map((glow, i) => `<button class="color-swatch ${currentPlayer().glow === i ? "selected" : ""}" data-glow="${i}" style="--swatch:${glow.color}" aria-label="${glow.name}" aria-pressed="${currentPlayer().glow === i}">${currentPlayer().glow === i ? icon("check") : ""}</button>`).join("")}</div>
     <div class="explorer-detail">${icon("compass")}<div><strong>A little star compass</strong><span>For finding the next adventure.</span></div></div><div class="explorer-detail">${icon("heart")}<div><strong>A kind and curious heart</strong><span>The most special thing you carry.</span></div></div><p>This is our first explorer idea. You get to help decide who your Cloudkeeper becomes.</p></div></div>`;
@@ -191,12 +186,12 @@ document.addEventListener("click", (event) => {
     openPanel(button.dataset.dialog);
   } else if (button === explorer) openPanel("explorer");
   else if (button.dataset.player) {
-    preferences.player = button.dataset.player;
+    preferences.selectedProfileId = button.dataset.player;
     resetPosition();
     updatePlayer();
     save();
     closePanel();
-    toast(`Welcome to the clouds, ${preferences.player}!`);
+    toast(`Welcome to the clouds, ${playerName()}!`);
     chime();
   } else if (button.dataset.glow !== undefined) {
     currentPlayer().glow = Number(button.dataset.glow);
@@ -346,10 +341,10 @@ function frame(time) {
 }
 
 $("#day-toggle").addEventListener("click", () => {
-  preferences.night = !preferences.night;
+  preferences.preferences.night = !preferences.preferences.night;
   save();
   updateNight();
-  tone(preferences.night ? 329.63 : 523.25, 0, 0.7);
+  tone(preferences.preferences.night ? 329.63 : 523.25, 0, 0.7);
 });
 $("#sound-toggle").addEventListener("click", async () => {
   try {
@@ -407,7 +402,7 @@ function resetPosition() {
   explorer.style.setProperty("--x", 52);
   explorer.style.setProperty("--y", 57);
 }
-const journey = createJourneyUI({
+journey = createJourneyUI({
   game,
   content,
   modal,
@@ -418,8 +413,15 @@ const journey = createJourneyUI({
   closePanel,
   openPanel,
   currentPlayer,
-  playerName: () => preferences.player,
-  player: (name) => preferences.players[name],
+  playerName,
+  currentProfileId: () => preferences.selectedProfileId,
+  profileEntries: () => profileEntries(preferences),
+  player: (id) => preferences.profiles[id].data,
+  renamePlayer: (id, nickname) => {
+    preferences.profiles[id].nickname = nickname;
+    save();
+    updatePlayer();
+  },
   celebrate: petPip,
   resetPosition,
   setTravelling: (value) => {
@@ -432,3 +434,24 @@ updatePlayer();
 updateNight();
 fitWorld();
 requestAnimationFrame(frame);
+
+const setSaveStatus = (message, error = false) => {
+  const status = $("#save-status");
+  status.textContent = message;
+  status.classList.toggle("save-error", error);
+  $(".preview-label").textContent = message.toUpperCase();
+};
+const applyLibrary = (library) => {
+  preferences = restoreLibrary(library);
+  resetPosition();
+  updateNight();
+  updatePlayer();
+};
+setupCloud({
+  apply: applyLibrary,
+  guest: readGuest,
+  status: setSaveStatus,
+  activate: (cloud) => {
+    activeCloud = cloud;
+  },
+});

@@ -1,0 +1,26 @@
+{
+  "name": "Cloudkeepers: A Sky Full of Friends",
+  "short_name": "Cloudkeepers",
+  "description": "A twelve-island maths adventure for young learners.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#9aceca",
+  "theme_color": "#47775e",
+  "icons": [
+    {
+      "src": "/icons/cloudkeepers-storybook-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/cloudkeepers-storybook-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
