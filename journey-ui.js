@@ -9,6 +9,7 @@ import {
   unlockTravel,
   visitIsland,
   rescuedCount,
+  journeyObjective,
   skill,
   changeYear,
   newAdventure,
@@ -137,12 +138,64 @@ export function createJourneyUI(hooks) {
     const s = state(),
       i = s.current,
       island = ISLANDS[i],
-      r = s.islands[i];
+      r = s.islands[i],
+      count = rescuedCount(s),
+      objective = journeyObjective(s);
     if (s.won) {
       renderVictory();
       return;
     }
-    content.innerHTML = `<div class="quest-intro"><div class="quest-portrait">${animalArt(i, true)}</div><div>${header(`ISLAND ${i + 1} · ${TOPICS[i]}`, r.rescued ? `${island.friend} is safe!` : `A little help for ${island.friend}`, island.description)}${stars(r.stars)}<div class="quest-start-buttons"><button class="primary-button" data-game="challenge">${r.stars === 0 ? "Let’s help!" : r.stars < 5 ? "Earn another star" : "Practise some more"} ${icon("star")}</button>${r.travel && i < 11 ? `<button class="secondary-button" data-game="forward">Travel to ${ISLANDS[i + 1].name} ${icon("arrow")}</button>` : ""}</div></div></div>${rewardButtons()}<div class="modal-note">${icon("heart")} Travel opens at 3 stars. Your friend is ready to rescue at 5. Come back for anyone you leave behind.</div>${i === 11 && rescuedCount(s) < 12 ? `<button class="secondary-button return-friends" data-game="missing">Find my missing friends (${12 - rescuedCount(s)})</button>` : ""}`;
+    const remaining = RESCUE_STARS - r.stars;
+    let primaryAction = "challenge",
+      primaryLabel =
+        r.stars === 0
+          ? "Let’s help!"
+          : r.stars < TRAVEL_STARS
+            ? "Earn another star"
+            : `Earn ${remaining} more star${remaining === 1 ? "" : "s"} to rescue ${island.friend}`,
+      primaryIcon = "star",
+      secondary = "";
+    if (objective === "rescue") {
+      primaryAction = "rescue";
+      primaryLabel = `Rescue ${island.friend}`;
+      primaryIcon = "paw";
+    } else if (objective === "return-haven") {
+      primaryAction = "haven";
+      primaryLabel = "Return to Cloudkeeper Haven";
+      primaryIcon = "heart";
+    } else if (objective === "unlock-travel" || objective === "light-beacon") {
+      primaryAction = "unlock";
+      primaryLabel =
+        objective === "light-beacon"
+          ? "Light the home beacon"
+          : `Unlock ${island.travel}`;
+      primaryIcon = "map";
+    } else if (objective === "travel-forward") {
+      primaryAction = "forward";
+      primaryLabel = `Travel to ${ISLANDS[i + 1].name}`;
+      primaryIcon = "arrow";
+    } else if (objective === "find-missing") {
+      primaryAction = "missing";
+      primaryLabel = `Find my missing friends (${12 - count})`;
+      primaryIcon = "map";
+    }
+    if (
+      (objective === "earn-star" || objective === "rescue") &&
+      r.travel &&
+      i < 11
+    )
+      secondary = `<button class="secondary-button" data-game="forward">Travel now · ${island.friend} stays here ${icon("arrow")}</button>`;
+    else if (
+      [
+        "return-haven",
+        "unlock-travel",
+        "light-beacon",
+        "travel-forward",
+        "find-missing",
+      ].includes(objective)
+    )
+      secondary = `<button class="secondary-button" data-game="challenge">Practise this topic ${icon("star")}</button>`;
+    content.innerHTML = `<div class="quest-intro"><div class="quest-portrait">${animalArt(i, true)}</div><div>${header(`ISLAND ${i + 1} · ${TOPICS[i]}`, r.rescued ? `${island.friend} is safe!` : `A little help for ${island.friend}`, island.description)}${stars(r.stars)}<div class="quest-start-buttons"><button class="primary-button" data-game="${primaryAction}">${primaryLabel} ${icon(primaryIcon)}</button>${secondary}</div></div></div>${rewardButtons()}<div class="modal-note">${icon("heart")} Travel opens at 3 stars. Your friend is ready to rescue at 5. Come back for anyone you leave behind.</div>${i === 11 && count < 12 && objective !== "find-missing" ? `<button class="secondary-button return-friends" data-game="missing">Find my missing friends (${12 - count})</button>` : ""}`;
   }
   function renderQuiz() {
     const s = state();
@@ -356,6 +409,7 @@ export function createJourneyUI(hooks) {
         toast(`${ISLANDS[state().current].friend} has joined your crew!`);
       }
     } else if (action === "forward") travel(state().current + 1);
+    else if (action === "haven") travel(11);
     else if (action === "visit")
       selected === state().current ? closePanel() : travel(selected);
     else if (action === "missing") {

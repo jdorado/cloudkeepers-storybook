@@ -2,6 +2,7 @@ import { generateQuestion, normaliseAnswer, TOPICS } from "./questions.js";
 export { TOPICS };
 export const TRAVEL_STARS = 3,
   RESCUE_STARS = 5;
+const CLEAN_ANSWERS_TO_LEVEL = 2;
 export const ISLANDS = [
   [
     "Clover Cove",
@@ -281,6 +282,23 @@ export function canWin(state) {
 export function rescuedCount(state) {
   return state.islands.filter((x) => x.rescued).length;
 }
+export function journeyObjective(state) {
+  const record = state.islands[state.current];
+  if (canWin(state)) return "victory";
+  if (record.stars < RESCUE_STARS) return "earn-star";
+  if (!record.rescued) return "rescue";
+  if (
+    rescuedCount(state) === state.islands.length &&
+    state.current !== state.islands.length - 1
+  )
+    return "return-haven";
+  if (!record.travel)
+    return state.current === state.islands.length - 1
+      ? "light-beacon"
+      : "unlock-travel";
+  if (state.current < state.islands.length - 1) return "travel-forward";
+  return "find-missing";
+}
 export function skill(state, topic) {
   return (state.skills[state.year][topic] ||= {
     level: 0,
@@ -354,7 +372,7 @@ export function submitAnswer(state, id, value) {
   s.misses = 0;
   if (!session.hint && session.attempts === 0) {
     s.streak++;
-    if (s.streak >= 3) {
+    if (s.streak >= CLEAN_ANSWERS_TO_LEVEL) {
       s.level = Math.min(2, s.level + 1);
       s.streak = 0;
     }
