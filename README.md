@@ -6,7 +6,7 @@ A complete playable family browser game: rescue twelve animals across floating i
 
 ```sh
 cd /Users/juancamilo/dev/other/cloudkeepers-storybook
-npm run dev
+pnpm run dev
 ```
 
 Open http://127.0.0.1:4317. Choose either child profile at the top and edit its nickname. Both explorers have independent saved adventures and maths settings. Settings also offer UK pounds/pence or UAE dirhams.
@@ -36,12 +36,12 @@ Questions are generated from numbers and templates, with no AI service. Recent q
 ## Build and verify
 
 ```sh
-npm test
-npm run build
-npm run preview
+pnpm test
+pnpm run build
+pnpm run preview
 ```
 
-The browser build is emitted to `dist/`. Vercel serves that build and the two functions in `api/`. Use `preview` after stopping the dev server, or choose another port with `PORT=4318 npm run preview`. All artwork and fonts are local, and there is no analytics.
+The browser build is emitted to `dist/`. Vercel serves that build and the two functions in `api/`. Use `preview` after stopping the dev server, or choose another port with `PORT=4318 pnpm run preview`. All artwork and fonts are local, and there is no analytics.
 
 Tests sample 14,400 generated questions, independently check arithmetic from learner-facing prompts, simulate both complete journeys with backtracking, validate save/restore and adaptive rules, and reject stale/double answer submissions. Browser QA covers wrong/right/typed answers, rewards, travel/backtracking, crew, profiles, reload and small screens.
 
