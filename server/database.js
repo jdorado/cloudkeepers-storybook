@@ -13,6 +13,6 @@ export async function savesCollection() {
       throw error;
     });
   return (await connection)
-    .db(process.env.MONGODB_DATABASE || "cloudkeepers_storybook")
+    .db(process.env.MONGODB_DATABASE || "learning_games")
     .collection("game_saves");
 }

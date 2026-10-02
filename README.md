@@ -1,6 +1,6 @@
 # Cloudkeepers
 
-A complete playable family browser game: rescue twelve animals across floating islands, unlock twelve ways to travel, and bring everyone home. The renderer uses plain HTML, CSS and JavaScript with original local artwork. Optional parent sign-in uses the shared Learning Games Clerk application and saves to this game's own MongoDB database.
+A complete playable family browser game: rescue twelve animals across floating islands, unlock twelve ways to travel, and bring everyone home. The renderer uses plain HTML, CSS and JavaScript with original local artwork. Optional parent sign-in uses the shared Learning Games Clerk application and saves to the shared Atlas `learning_games.game_saves` collection, scoped by the server-owned game ID and verified parent ID.
 
 ## Play
 
@@ -57,6 +57,7 @@ The game includes five scenic environments with themed variants across twelve is
 - Public repository: `https://github.com/jdorado/cloudkeepers-storybook`
 - Vercel project: `cloudkeepers-storybook`
 - Production origin: `https://cloudkeepers-storybook.eztudy.space`
-- Mongo database: `cloudkeepers_storybook`
+- Shared Atlas binding: `learning-games`; database `learning_games`, collection `game_saves`
+- Shared parent identity: existing Clerk Learning Games production application and Google connection
 
-The similarly named `cloudkeepers` repository, project, database and domain belong to a separate game.
+The similarly named `cloudkeepers` repository, Vercel project and domain belong to a separate game. Both reuse the same Clerk and Atlas setup; their server-owned game IDs isolate saves. Reuse the working private provider bindings instead of creating another database credential. Independent external operators supply their own provider configuration.

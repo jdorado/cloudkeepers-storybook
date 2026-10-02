@@ -56,6 +56,18 @@ test("save identity is game-scoped and server-owned", () => {
   assert.throws(() => normalizeSave({ ...createLibrary(), profiles: {} }));
 });
 
+test("shared collection preserves the reference game for the same parent", async () => {
+  const collection = new MemoryCollection();
+  const foreign = { _id: "cloudkeepers:parent-a", revision: 7, library: { marker: "reference progress" } };
+  await collection.insertOne(foreign);
+  assert.equal((await readAccount(collection, "parent-a")).save, null);
+  const save = createLibrary();
+  assert.equal((await writeAccount(collection, "parent-a", { revision: 0, mutationId: operation("1"), save })).status, 200);
+  assert.equal((await writeAccount(collection, "parent-a", { revision: 1, mutationId: operation("2"), save })).status, 200);
+  assert.deepEqual(await collection.findOne({ _id: foreign._id }), foreign);
+  assert.equal(collection.docs.size, 2);
+});
+
 test("writes are idempotent, revision checked, and tenant isolated", async () => {
   const collection = new MemoryCollection();
   const first = createLibrary();
