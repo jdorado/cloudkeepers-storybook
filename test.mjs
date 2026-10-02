@@ -12,6 +12,7 @@ import {
   changeYear,
   canWin,
   rescuedCount,
+  journeyObjective,
 } from "./adventure.js";
 
 let seed = 4267;
@@ -117,6 +118,40 @@ const solve = (state) => {
   assert.deepEqual(submitAnswer(state, q.id, q.answer), { ignored: true });
   return q;
 };
+
+const adaptivePath = newAdventure(1);
+const adaptiveLevels = [];
+for (let i = 0; i < 5; i++) {
+  const q = nextQuestion(adaptivePath, random);
+  adaptiveLevels.push(q.level);
+  assert.equal(submitAnswer(adaptivePath, q.id, q.answer).correct, true);
+}
+assert.deepEqual(
+  adaptiveLevels,
+  [0, 0, 1, 1, 2],
+  "A clean five-star island reaches every difficulty band",
+);
+assert.equal(journeyObjective(adaptivePath), "rescue");
+assert.equal(unlockTravel(adaptivePath), true);
+assert.equal(rescueAnimal(adaptivePath), true);
+assert.equal(journeyObjective(adaptivePath), "travel-forward");
+
+const homebound = newAdventure(1);
+for (const island of homebound.islands) {
+  island.unlocked = true;
+  island.stars = 5;
+  island.rescued = true;
+  island.travel = true;
+}
+homebound.current = 4;
+assert.equal(journeyObjective(homebound), "return-haven");
+homebound.current = 11;
+homebound.islands[3].rescued = false;
+assert.equal(journeyObjective(homebound), "find-missing");
+homebound.islands[3].rescued = true;
+homebound.islands[11].travel = false;
+assert.equal(journeyObjective(homebound), "light-beacon");
+
 for (const year of [1, 3]) {
   let state = newAdventure(year);
   assert.equal(visitIsland(state, 1), false);

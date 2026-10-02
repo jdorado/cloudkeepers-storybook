@@ -31,7 +31,7 @@ Year 1 uses counting, smaller numbers, sharing and grouping, halves/quarters, si
 
 This repertoire practises selected skills from the [English mathematics programmes of study](https://www.gov.uk/government/publications/national-curriculum-in-england-mathematics-programmes-of-study/national-curriculum-in-england-mathematics-programmes-of-study). It is a game for practice, not a complete replacement for the school programme. Feedback from young co-designers can guide later content and design changes.
 
-Questions are generated from numbers and templates, with no AI service. Recent questions are avoided, choices never contain equivalent duplicates, and fraction equivalence is recognised when checking answers. Each topic has three difficulty bands: three clean first-try answers raise the band; two incorrect attempts lower it. Hint-assisted/retried answers earn stars without forcing harder questions. Year 1 and Year 3 keep separate skill records. Grown-up corner shows practice totals and topic summaries, and can reset just the selected explorer.
+Questions are generated from numbers and templates, with no AI service. Recent questions are avoided, choices never contain equivalent duplicates, and fraction equivalence is recognised when checking answers. Each topic has three difficulty bands: two clean first-try answers raise the band, so a confident learner sees all three during a five-star island; two incorrect attempts lower it. Hint-assisted/retried answers earn stars without forcing harder questions. Year 1 and Year 3 keep separate skill records. Grown-up corner shows practice totals and topic summaries, and can reset just the selected explorer.
 
 ## Build and verify
 
