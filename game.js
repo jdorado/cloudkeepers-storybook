@@ -414,6 +414,7 @@ journey = createJourneyUI({
   openPanel,
   currentPlayer,
   playerName,
+  evidenceProfiles: () => Object.entries(preferences.profiles).map(([profileId, profile]) => ({ profileId, nickname: profile.nickname, evidence: profile.data.adventure.evidence, pending: profile.data.adventure.session })),
   currentProfileId: () => preferences.selectedProfileId,
   profileEntries: () => profileEntries(preferences),
   player: (id) => preferences.profiles[id].data,

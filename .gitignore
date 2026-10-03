@@ -3,3 +3,7 @@ node_modules/
 .DS_Store
 *.log
 .vercel
+
+# Private learning review exports
+*-learning-evidence.json
+learning-exports/

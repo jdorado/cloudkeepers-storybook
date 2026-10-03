@@ -1,7 +1,7 @@
 # Cloudkeepers
 
-Canonical local checkout: `/Users/juancamilo/dev/other/cloudkeepers-storybook`.
-New browser games belong under `/Users/juancamilo/dev/other/<repository-name>`.
+Canonical local checkout: `/Users/juancamilo/dev/games/cloudkeepers-storybook`.
+New browser games belong under `/Users/juancamilo/dev/games/<repository-name>`.
 
 Standalone family browser game. This is not an AIFit or Ez project.
 

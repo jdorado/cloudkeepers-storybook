@@ -19,6 +19,7 @@ const allowed = new Set([
   "library.js",
   "cloud-save.js",
   "id.js",
+  "evidence.js",
   "manifest.webmanifest",
   "icons",
   "assets",

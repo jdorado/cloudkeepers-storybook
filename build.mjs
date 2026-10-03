@@ -15,6 +15,7 @@ for (const file of [
   "library.js",
   "cloud-save.js",
   "id.js",
+  "evidence.js",
   "manifest.webmanifest",
 ])
   await copyFile(new URL(file, root), new URL(file, dist));

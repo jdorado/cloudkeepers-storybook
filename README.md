@@ -61,3 +61,7 @@ The game includes five scenic environments with themed variants across twelve is
 - Shared parent identity: existing Clerk Learning Games production application and Google connection
 
 The similarly named `cloudkeepers` repository, Vercel project and domain belong to a separate game. Both reuse the same Clerk and Atlas setup; their server-owned game IDs isolate saves. Reuse the working private provider bindings instead of creating another database credential. Independent external operators supply their own provider configuration.
+
+## Learning evidence
+
+Parent review can download exact questions, submitted answers, retries, help and approximate active time. Signed-in evidence stays in private parent-owned saves; guest evidence stays on the device. See [the evidence format and manual EzStudy workflow](LEARNING_EVIDENCE.md).

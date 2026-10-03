@@ -18,12 +18,20 @@ Reuse the existing Atlas binding and Clerk production keys; do not create a game
 
 Vercel owns the five server-side variables listed in `.env.example`. Secret values never enter the browser bundle or repository. The public build includes its own favicon, Apple touch icon and install manifest.
 
-## Shared-binding status — 2 October 2026
+## Shared-binding status — 3 October 2026
 
-Source guidance, environment examples and save scoping now target the shared
-Atlas resource and `learning_games.game_saves`. Provider readback found only the
-reference `cloudkeepers` project connected to that resource. The connection for
-this project remains pending action-time approval; the source change is not
-live Google/Mongo acceptance evidence. Do not create another Atlas password.
+This project is now connected to the existing `learning-games` Atlas resource
+for production. Vercel installs the resource's private Mongo connection; no new
+cluster, database or password was created. Production uses the existing Learning
+Games Clerk application and server key. These are provider configuration checks;
+a signed-in save/readback is recorded separately from configuration readiness.
 
-Release proof is the `production` deployment for this project and the annotated `v1.0.0` Git tag; both must resolve to the same commit.
+Release proof is the production deployment metadata and the source commit recorded by Vercel.
+
+## Learning evidence release — 3 October 2026
+
+Added bounded private question/attempt/help evidence and a parent JSON export for
+manual EzStudy review. Old saves remain compatible and historical evidence is not
+invented. See `LEARNING_EVIDENCE.md`. Local verification: 8 tests and the
+production build passed; browser checks covered answer/help and evidence download.
+Deployment commit and status are available in the production deployment metadata.

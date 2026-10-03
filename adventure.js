@@ -1,3 +1,4 @@
+import { restoreEvidence, recordEvidence, evidenceContext } from './evidence.js';
 import { generateQuestion, normaliseAnswer, TOPICS } from "./questions.js";
 export { TOPICS };
 export const TRAVEL_STARS = 3,
@@ -180,6 +181,9 @@ export const ISLANDS = [
   }),
 );
 
+function context(state) { const s = state.session; return evidenceContext(s.question, state.year, s.question.level, s.question.topic, s.activeMs, 'storybook-maths-v1'); }
+export function recordHelp(state, type = 'hint') { if (!state.session || state.session.solved) return; recordEvidence(state.evidence, context(state), type); if (type === 'hint') state.session.hint = true; }
+export function skipQuestion(state) { if (state.session && !state.session.solved) recordEvidence(state.evidence, context(state), 'skip'); }
 export function newAdventure(year = 1) {
   return {
     version: 1,
@@ -195,6 +199,7 @@ export function newAdventure(year = 1) {
     skills: { 1: {}, 3: {} },
     session: null,
     history: [],
+    evidence: restoreEvidence(),
     correct: 0,
     incorrect: 0,
     won: false,
@@ -204,6 +209,7 @@ export function restoreAdventure(saved, defaultYear = 1) {
   const state = newAdventure(defaultYear);
   if (!saved || saved.version !== 1) return state;
   state.year = [1, 3].includes(saved.year) ? saved.year : defaultYear;
+  state.evidence = restoreEvidence(saved.evidence);
   state.currency = saved.currency === "AED" ? "AED" : "GBP";
   state.correct = Math.max(0, Number(saved.correct) || 0);
   state.incorrect = Math.max(0, Number(saved.incorrect) || 0);
@@ -266,6 +272,7 @@ export function restoreAdventure(saved, defaultYear = 1) {
     state.session = {
       question: q,
       attempts: Math.max(0, Number(session.attempts) || 0),
+      activeMs: Number.isFinite(session.activeMs) && session.activeMs >= 0 ? Math.min(86_400_000, session.activeMs) : 0,
       hint: session.hint === true,
       solved: session.solved === true,
     };
@@ -335,7 +342,8 @@ export function nextQuestion(state, random = Math.random) {
   q.island = state.current;
   state.history.push(q.signature);
   state.history = state.history.slice(-24);
-  state.session = { question: q, attempts: 0, hint: false, solved: false };
+  state.session = { question: q, attempts: 0, hint: false, solved: false, activeMs: 0 };
+  recordEvidence(state.evidence, context(state), 'question');
   return q;
 }
 export function submitAnswer(state, id, value) {
@@ -351,8 +359,10 @@ export function submitAnswer(state, id, value) {
     return { ignored: true };
   const s = skill(state, q.topic);
   const correct = normaliseAnswer(value) === normaliseAnswer(q.answer);
+  recordEvidence(state.evidence, context(state), 'answer', { submittedAnswer: String(value).slice(0, 1000), attempt: session.attempts + 1, correct, helpUsed: session.hint, independent: correct && !session.hint && session.attempts === 0 });
   if (!correct) {
     session.attempts++;
+    recordHelp(state, session.attempts >= 2 ? 'explanation' : 'hint');
     state.incorrect++;
     s.incorrect++;
     s.streak = 0;
@@ -403,6 +413,7 @@ export function rescueAnimal(state) {
 }
 export function visitIsland(state, index) {
   if (!Number.isInteger(index) || !state.islands[index]?.unlocked) return false;
+  skipQuestion(state);
   state.current = index;
   state.session = null;
   state.won = canWin(state);
@@ -410,6 +421,7 @@ export function visitIsland(state, index) {
 }
 export function changeYear(state, year) {
   if (![1, 3].includes(year)) return false;
+  skipQuestion(state);
   state.year = year;
   state.session = null;
   return true;

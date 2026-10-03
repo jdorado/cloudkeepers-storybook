@@ -11,12 +11,15 @@ import {
   rescuedCount,
   journeyObjective,
   skill,
+  recordHelp,
+  skipQuestion,
   changeYear,
   newAdventure,
 } from "./adventure.js";
 import { escapeText } from "./questions.js";
 import { vehicleArt } from "./vehicles.js";
 
+import { startEvidenceClock, downloadEvidence } from './evidence.js';
 export function createJourneyUI(hooks) {
   const {
     game,
@@ -197,6 +200,7 @@ export function createJourneyUI(hooks) {
       secondary = `<button class="secondary-button" data-game="challenge">Practise this topic ${icon("star")}</button>`;
     content.innerHTML = `<div class="quest-intro"><div class="quest-portrait">${animalArt(i, true)}</div><div>${header(`ISLAND ${i + 1} · ${TOPICS[i]}`, r.rescued ? `${island.friend} is safe!` : `A little help for ${island.friend}`, island.description)}${stars(r.stars)}<div class="quest-start-buttons"><button class="primary-button" data-game="${primaryAction}">${primaryLabel} ${icon(primaryIcon)}</button>${secondary}</div></div></div>${rewardButtons()}<div class="modal-note">${icon("heart")} Travel opens at 3 stars. Your friend is ready to rescue at 5. Come back for anyone you leave behind.</div>${i === 11 && count < 12 && objective !== "find-missing" ? `<button class="secondary-button return-friends" data-game="missing">Find my missing friends (${12 - count})</button>` : ""}`;
   }
+  startEvidenceClock(() => modal.open && content.querySelector('.quiz-header') && !state().session?.solved ? state().session : null, save);
   function renderQuiz() {
     const s = state();
     const q = s.session?.question || nextQuestion(s);
@@ -256,7 +260,7 @@ export function createJourneyUI(hooks) {
       },
     ).join(
       "",
-    )}</div><p class="help-footer">Based on the English Year 1 and Year 3 maths programmes. This game practises selected skills; your school’s lessons and written work remain important. Wrong answers are retries, with no lost stars.</p><div class="stats-actions"><button class="secondary-button" data-game="profile">Explorer settings</button><button class="text-button" data-game="reset-confirm">Start this explorer’s journey again</button></div>`;
+    )}</div><p class="help-footer">Based on the English Year 1 and Year 3 maths programmes. This game practises selected skills; your school’s lessons and written work remain important. Wrong answers are retries, with no lost stars.</p><div class="stats-actions"><button class="secondary-button" data-game="export-evidence">Download learning evidence</button><button class="secondary-button" data-game="profile">Explorer settings</button><button class="text-button" data-game="reset-confirm">Start this explorer’s journey again</button></div>`;
   }
   function renderHelp() {
     content.innerHTML = `${header("A LITTLE HELP FOR YOUR ADVENTURE", "Twelve islands. Twelve new friends.", "No timer, no rush. A kind heart and a little maths will take you far.")}<div class="help-grid"><div class="help-card">${icon("star")}<h3>Earn cloud stars</h3><p>Tap Start adventure or your island animal. Answer a question to earn one star. Hints help you learn; mistakes never take stars away.</p></div><div class="help-card">${icon("map")}<h3>Unlock your ride</h3><p>At 3 stars, unlock the island’s transport. You can travel onward and use the sky map to return to open islands.</p></div><div class="help-card">${icon("paw")}<h3>Rescue your friend</h3><p>At 5 stars, tap Rescue to add the animal to your crew. Every rescued friend travels with you.</p></div><div class="help-card">${icon("heart")}<h3>Bring everyone home</h3><p>Rescue all 12 animals, reach Cloudkeeper Haven, and light its home beacon. That’s how a Cloudkeeper wins!</p></div></div><p class="help-footer">Wander using arrow keys, W A S D, or a tap on the grass. Choose an explorer at the top. Sunshine, moonlight, and soft sounds are yours to explore.</p><button class="secondary-button" data-game="profile">Choose explorer and maths level</button>`;
@@ -360,8 +364,10 @@ export function createJourneyUI(hooks) {
     }
     const action = button.dataset.game;
     if (!action) return false;
-    if (action === "challenge" || action === "next" || action === "skip") {
+    if (action === "export-evidence") { downloadEvidence("cloudkeepers-storybook", hooks.evidenceProfiles()); }
+    else if (action === "challenge" || action === "next" || action === "skip") {
       if (action === "skip" && state().session && !state().session.solved) {
+        skipQuestion(state());
         const sk = skill(state(), state().session.question.topic);
         sk.level = Math.max(0, sk.level - 1);
         state().session = null;
@@ -371,10 +377,11 @@ export function createJourneyUI(hooks) {
       feedbackType = "";
       renderQuiz();
     } else if (action === "hint") {
-      state().session.hint = true;
+      recordHelp(state());
       save();
       renderQuiz();
     } else if (action === "read") {
+      recordHelp(state(), "read"); save();
       if ("speechSynthesis" in window) {
         speechSynthesis.cancel();
         const q = state().session.question;
