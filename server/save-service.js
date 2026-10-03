@@ -106,6 +106,7 @@ export async function writeAccount(collection, userId, input) {
     };
   const next = {
     _id,
+    parentId: userId,
     ...save,
     revision: input.revision + 1,
     mutationId: input.mutationId,

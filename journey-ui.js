@@ -19,7 +19,7 @@ import {
 import { escapeText } from "./questions.js";
 import { vehicleArt } from "./vehicles.js";
 
-import { startEvidenceClock, downloadEvidence } from './evidence.js';
+import { startEvidenceClock } from './evidence.js';
 export function createJourneyUI(hooks) {
   const {
     game,
@@ -260,7 +260,7 @@ export function createJourneyUI(hooks) {
       },
     ).join(
       "",
-    )}</div><p class="help-footer">Based on the English Year 1 and Year 3 maths programmes. This game practises selected skills; your school’s lessons and written work remain important. Wrong answers are retries, with no lost stars.</p><div class="stats-actions"><button class="secondary-button" data-game="export-evidence">Download learning evidence</button><button class="secondary-button" data-game="profile">Explorer settings</button><button class="text-button" data-game="reset-confirm">Start this explorer’s journey again</button></div>`;
+    )}</div><p class="help-footer">Based on the English Year 1 and Year 3 maths programmes. This game practises selected skills; your school’s lessons and written work remain important. Wrong answers are retries, with no lost stars.</p><div class="stats-actions"><button class="secondary-button" data-game="profile">Explorer settings</button><button class="text-button" data-game="reset-confirm">Start this explorer’s journey again</button></div>`;
   }
   function renderHelp() {
     content.innerHTML = `${header("A LITTLE HELP FOR YOUR ADVENTURE", "Twelve islands. Twelve new friends.", "No timer, no rush. A kind heart and a little maths will take you far.")}<div class="help-grid"><div class="help-card">${icon("star")}<h3>Earn cloud stars</h3><p>Tap Start adventure or your island animal. Answer a question to earn one star. Hints help you learn; mistakes never take stars away.</p></div><div class="help-card">${icon("map")}<h3>Unlock your ride</h3><p>At 3 stars, unlock the island’s transport. You can travel onward and use the sky map to return to open islands.</p></div><div class="help-card">${icon("paw")}<h3>Rescue your friend</h3><p>At 5 stars, tap Rescue to add the animal to your crew. Every rescued friend travels with you.</p></div><div class="help-card">${icon("heart")}<h3>Bring everyone home</h3><p>Rescue all 12 animals, reach Cloudkeeper Haven, and light its home beacon. That’s how a Cloudkeeper wins!</p></div></div><p class="help-footer">Wander using arrow keys, W A S D, or a tap on the grass. Choose an explorer at the top. Sunshine, moonlight, and soft sounds are yours to explore.</p><button class="secondary-button" data-game="profile">Choose explorer and maths level</button>`;
@@ -364,7 +364,6 @@ export function createJourneyUI(hooks) {
     }
     const action = button.dataset.game;
     if (!action) return false;
-    if (action === "export-evidence") { downloadEvidence("cloudkeepers-storybook", hooks.evidenceProfiles()); }
     else if (action === "challenge" || action === "next" || action === "skip") {
       if (action === "skip" && state().session && !state().session.solved) {
         skipQuestion(state());
